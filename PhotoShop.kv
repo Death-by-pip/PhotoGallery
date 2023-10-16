@@ -1,0 +1,88 @@
+PhotoShop
+
+<Label>
+    font_size: "25sp"
+    font_name: "Cour.ttf"
+
+<Filters>
+    Button:
+        text: "Black & White"
+        height: "20dp"
+        on_release: root.select("black and white")
+        size_hint_y: None
+    Button:
+        text: "Inverse"
+        height: "20dp"
+        on_release: root.select("inverse")
+        size_hint_y: None
+    Button:
+        text: "Pointillism"
+        height: "20dp"
+        on_release: root.select("pointillism")
+        size_hint_y: None
+    Button:
+        text: "Line Drawing"
+        height: "20dp"
+        on_release: root.select("line art")
+        size_hint_y: None
+    Button:
+        text: "Pixelate"
+        height: "20dp"
+        on_release: root.select("pixelation")
+        size_hint_y: None
+    Button:
+        text: "Deselect"
+        height: "20dp"
+        on_release: root.select("none")
+        size_hint_y: None
+
+<PhotoShop@Display>
+    BoxLayout:
+        orientation: "vertical"
+        BoxLayout:
+            size_hint: 1, .5
+            orientation: "horizontal"
+            TextInput:
+                id: filename
+                font_size: "30sp"
+                text_hint: "image file name"
+            Button:
+                text: "Load Image"
+                on_press: root.update()
+        FilterSelect
+        Image:
+            size_hint: 1, 5
+            id: image
+            source: ""
+
+<Gallery@Display>
+    BoxLayout:
+        orientation: "vertical"
+        padding: "20dp"
+        spacing: "10dp"
+
+        Label:
+            size_hint: 1, None
+            height: "40dp"
+            text: "omori fr fr"
+        Image:
+            id: image
+            source: root.display_image()
+        BoxLayout:
+            size_hint: 1, None
+            height: "65dp"
+            orientation: "horizontal"
+            Label
+            Button:
+                size_hint: None, 1
+                width: "200dp"
+                text: "<-"
+                on_press: root.retreat()
+            Label:
+                size_hint: 3, 1
+            Button:
+                size_hint: None, 1
+                width: "200dp"
+                text: "->"
+                on_press: root.advance()
+            Label
