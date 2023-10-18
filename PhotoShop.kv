@@ -8,12 +8,12 @@ PhotoShop
     Button:
         text: "Black & White"
         height: "20dp"
-        on_release: root.select("black and white")
+        on_release: root.select("greyscale")
         size_hint_y: None
     Button:
         text: "Inverse"
         height: "20dp"
-        on_release: root.select("inverse")
+        on_release: root.select("invert")
         size_hint_y: None
     Button:
         text: "Pointillism"
@@ -23,17 +23,27 @@ PhotoShop
     Button:
         text: "Line Drawing"
         height: "20dp"
-        on_release: root.select("line art")
+        on_release: root.select("line_drawing")
+        size_hint_y: None
+    Button:
+        text: "Sepia"
+        height: "20dp"
+        on_release: root.select("sepia")
+        size_hint_y: None
+    Button:
+        text: "Rainbow"
+        height: "20dp"
+        on_release: root.select("rainbow_image")
         size_hint_y: None
     Button:
         text: "Pixelate"
         height: "20dp"
-        on_release: root.select("pixelation")
+        on_release: root.select("pixelate")
         size_hint_y: None
     Button:
         text: "Deselect"
         height: "20dp"
-        on_release: root.select("none")
+        on_release: root.select(None)
         size_hint_y: None
 
 <PhotoShop@Display>
@@ -49,7 +59,18 @@ PhotoShop
             Button:
                 text: "Load Image"
                 on_press: root.update()
-        FilterSelect
+        FilterSelect:
+            id: selector
+        BoxLayout:
+            size_hint: 1, .75
+            orientation: "horizontal"
+            TextInput:
+                id: intensity
+                font_size: "30sp"
+                text_hint: "intensity"
+            Button:
+                text: "Apply Filter"
+                on_press: root.apply()
         Image:
             size_hint: 1, 5
             id: image
