@@ -65,16 +65,19 @@ PhotoShop
             size_hint: 1, .75
             orientation: "horizontal"
             TextInput:
+                disabled: True
                 id: intensity
                 font_size: "30sp"
-                text_hint: "intensity"
-            Button:
+                text_hint: "intensity (0 to 1)"
+            ToggleButton:
+                id: applier
                 text: "Apply Filter"
-                on_press: root.apply()
+                on_release: root.apply()
         Image:
+            pos: self.pos
             size_hint: 1, 5
             id: image
-            source: ""
+            source: "TEMP.jpg"
 
 <Gallery@Display>
     BoxLayout:
