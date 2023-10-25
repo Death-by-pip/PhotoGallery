@@ -251,9 +251,9 @@ class Display(Screen):
         if self.ids.applier.state == "down" and not self.applypixel:
             self.applypixel = True
         elif self.filter == "pixelate" and self.applypixel:
-            pos = (self.ids.image.center_x - self.ids.image.norm_image_size[0] / 2, self.ids.image.center_y - self.ids.image.norm_image_size[1] / 2)
             W = self.ids.image.norm_image_size[0]
             H = self.ids.image.norm_image_size[1]
+            pos = (self.ids.image.center_x - self.ids.image.norm_image_size[0] / 2, self.ids.image.center_y - self.ids.image.norm_image_size[1] / 2)
             print(pos, W, H)
             C = [i for i in self.coords[1]]
             c = [i for i in self.coords[0]]
@@ -271,6 +271,12 @@ class Display(Screen):
                 print(X, Y, width, height)
                 if self.ids.intensity.text == "":
                     self.ids.intensity.text = ".3"
+                W = self.image.width / W
+                H = self.image.height / H
+                X *= W
+                Y *= H
+                width *= W
+                height *= H
                 self.image = pixelate(self.image, int(X), int(Y), int(width), int(height), float(self.ids.intensity.text))
                 self.image.save("TEMP.jpg")
                 self.ids.image.reload()
