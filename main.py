@@ -9,7 +9,13 @@ from PIL import Image, ImageDraw
 import random
 
 
-def
+def greyscale(image):
+    pixels = image.load()
+    for x in range(image.width):
+        for y in range(image.height):
+            c = (pixels[x, y][0] + pixels[x, y][1] + pixels[x, y][2])//3
+            pixels[x,y] = (c, c, c)
+    return image
 
 
 def invert(image):
@@ -213,9 +219,11 @@ class Display(Screen):
         if self.filter != "pixelate":
             self.applypixel = False
             self.ids.applier.state = "normal"
-            if self.filter != "line_drawing":
+            if self.filter != "line_drawing" and self.filter is not None:
                 self.image = eval(self.filter + "(self.image)", globals(), locals())
             elif self.filter == "line_drawing":
+                if self.ids.intensity.text=="":
+                    self.ids.intensity.text = ".82"
                 self.image = line_drawing(self.image, float(self.ids.intensity.text))
             self.image.save("TEMP.jpg")
             self.ids.image.reload()
@@ -261,6 +269,8 @@ class Display(Screen):
                 X = min(C[0], c[0])
                 Y = min(C[1], c[1])
                 print(X, Y, width, height)
+                if self.ids.intensity.text == "":
+                    self.ids.intensity.text = ".3"
                 self.image = pixelate(self.image, int(X), int(Y), int(width), int(height), float(self.ids.intensity.text))
                 self.image.save("TEMP.jpg")
                 self.ids.image.reload()
