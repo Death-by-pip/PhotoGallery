@@ -123,9 +123,9 @@ def pixelate(image, X, Y, width, height, intensity: float):
     sub_area = (height * width) ** intensityF
     swidth = (sub_area * width / height) ** (1 / 2)
     sheight = (sub_area * height / width) ** (1 / 2)
-    print(X, Y, width, height)
-    print(image.width, image.height)
-    print("----")
+    # print(X, Y, width, height)
+    # print(image.width, image.height)
+    # print("----")
     for x in range(round(swidth)):
         for y in range(round(sheight)):
             r = []
@@ -135,7 +135,7 @@ def pixelate(image, X, Y, width, height, intensity: float):
             X2 = X + round(width * (x + 1) / round(swidth))
             Y1 = Y + round(height * y / round(sheight))
             Y2 = Y + round(height * (y + 1) / round(sheight))
-            print(X1, Y1, X2, Y2)
+            # print(X1, Y1, X2, Y2)
             # print(X1," ",X2," ",Y1," ",Y2)
             for x1 in range(X1, X2):
                 for y1 in range(Y1, Y2):
@@ -161,6 +161,7 @@ def pixelate(image, X, Y, width, height, intensity: float):
     return image
 
 
+
 class FilterSelect(Button):
     def __init__(self, **kwargs):
         super(FilterSelect, self).__init__(**kwargs)
@@ -180,6 +181,7 @@ class FilterSelect(Button):
 class PhotoShopApp(App):
     pass
 
+images = [i+".jpg" if not ("." in i) else i for i in ["baking","bread","bus","drowning","duet","group_hug","group","hug","mari","open_door","orchestra","rain","smile","something","sparkler","treehouse"]]
 
 class Display(Screen):
     def __init__(self, **kwargs):
@@ -188,12 +190,22 @@ class Display(Screen):
         self.image = Image.new("RGB", (512, 512), 0)
         self.image.save("TEMP.jpg")
         self.coords = [(0, 0), (1, 1)]
+        self.filename = ""
         # self.ids.selector.bind(on_update=lambda instance, x: self.on_selection(x))
 
     def update(self):
         # global index
         # index = index%len(images)
-        self.image = Image.open(self.ids.filename.text)
+        try:
+            self.image = Image.open(self.ids.filename.text)
+        except:
+            try:
+                self.filename = images[images.index(self.filename)+1]
+            except:
+                self.filename = "baking.jpg"
+            self.image = Image.open(self.filename)
+            self.ids.filename.text = self.filename
+
         self.image.save("TEMP.jpg")
         self.ids.image.reload()
 
